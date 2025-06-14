@@ -1,10 +1,19 @@
 {
-    "name": "Hello Extensions",
-    "description": "Base Level Extension",
-    "version": "1.0",
+    "name": "Vim Navigation for Google",
+    "description": "Stop wasting time using you mouse when it comes time to search google. Use J and K to navigate through google results and Enter to open a website",
+    "version": "0.1",
     "manifest_version": 3,
     "action": {
         "default_popup": "index.html",
         "default_icon": "default.png"
-    }
+    },
+    "content_scripts": [
+        {
+            "js": ["scripts/content.js"],
+            "css": ["styles/content.css"],
+            "matches": [
+                "https://www.google.com/*"
+            ]
+        }
+    ]
 }
