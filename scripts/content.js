@@ -1,38 +1,38 @@
-// Search results html path
-// document.querySelector("#rso > div:nth-child(4) > div > div > div > div > div.kb0PBd.A9Y9g.jGGQ5e > div > div > span > a > h3")
-const searchResults = document.querySelector("#rso");
-let currPage;
-let pageNumber = 1;
+let currentIndex = 0;
 
-async function selectPage(number) {
-    currPage = searchResults.querySelector(`div:nth-child(${number}) > div > div > div > div > div:nth-child(1) > div > div > span > a`);
-
-    if(currPage) {
-        currPage?.focus();
-    }
-
-    return;
-    const h3 = currPage?.querySelector("h3");
-    if(h3) {
-        h3.focus();
-    }
+// Fetch all search result anchors (Google often wraps titles in <h3> inside an <a>)
+function getSearchResults() {
+    return [...document.querySelectorAll('#rso a h3')].map(h3 => h3.parentElement);
 }
 
-selectPage(1);
+function updateSelection(direction) {
+    const results = getSearchResults();
+    if (!results.length) return;
 
-addEventListener("keypress", (e) => {
-    if(e.key == "j") {
-        pageNumber++;
-    } else if(e.key == "k") {
-        pageNumber = pageNumber > 1 ? pageNumber - 1 : 1;
+    if (direction === 'down' && currentIndex < results.length - 1) {
+        currentIndex++;
+    } else if (direction === 'up' && currentIndex > 0) {
+        currentIndex--;
     }
 
-    selectPage(pageNumber);
+    results[currentIndex].scrollIntoView({ behavior: "smooth", block: "center" });
+    results[currentIndex].focus();
+}
 
-    if(e.key == "enter") {
-        let siteURL = currPage?.href;
-        if(siteURL) {
-            window.location.href = siteURL;
+// Initial highlight
+updateSelection();
+
+addEventListener("keydown", (e) => {
+    const results = getSearchResults();
+
+    if (e.key === "j") {
+        updateSelection("down");
+    } else if (e.key === "k") {
+        updateSelection("up");
+    } else if (e.key === "Enter") {
+        if (results[currentIndex]) {
+            window.location.href = results[currentIndex].href;
         }
     }
 });
+
