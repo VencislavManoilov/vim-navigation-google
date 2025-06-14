@@ -1,3 +1,5 @@
 a:focus > h3 {
-    border: 1px solid black;
+    border: 2px solid #8cf2ff;
+    border-radius: 12px;
+    padding: 6px 12px;
 }
