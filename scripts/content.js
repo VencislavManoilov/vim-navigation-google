@@ -1,12 +1,8 @@
+const page = document.querySelector("#search #rso");
+const results = [...page.querySelectorAll("a h3")].map(h3 => h3.parentElement);
 let currentIndex = 0;
 
-// Fetch all search result anchors (Google often wraps titles in <h3> inside an <a>)
-function getSearchResults() {
-    return [...document.querySelectorAll('#rso a h3')].map(h3 => h3.parentElement);
-}
-
 function updateSelection(direction) {
-    const results = getSearchResults();
     if (!results.length) return;
 
     if (direction === 'down' && currentIndex < results.length - 1) {
@@ -23,8 +19,6 @@ function updateSelection(direction) {
 updateSelection();
 
 addEventListener("keydown", (e) => {
-    const results = getSearchResults();
-
     if (e.key === "j") {
         updateSelection("down");
     } else if (e.key === "k") {
