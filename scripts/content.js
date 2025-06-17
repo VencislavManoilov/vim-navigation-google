@@ -27,12 +27,16 @@ function updateSelection(direction) {
 updateSelection();
 
 addEventListener("keydown", (e) => {
-    if (e.key === "j") {
+    const isShift = e.shiftKey;
+    
+    if (e.code === "KeyJ") {
         updateSelection("down");
-    } else if (e.key === "k") {
+    } else if (e.code === "KeyK") {
         updateSelection("up");
-    } else if (e.key === "Enter") {
-        if (results[currentIndex]) {
+    } else if (e.code === "Enter" && results[currentIndex]) {
+        if (isShift) {
+            window.open(results[currentIndex].href, '_blank', 'noopener, noreferrer');
+        } else {
             window.location.href = results[currentIndex].href;
         }
     }
