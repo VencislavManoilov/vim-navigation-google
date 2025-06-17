@@ -27,6 +27,13 @@ function updateSelection(direction) {
 updateSelection();
 
 addEventListener("keydown", (e) => {
+    const active = document.activeElement;
+    const isTyping = active.tagName === 'INPUT' ||
+                     active.tagName === 'TEXTAREA' ||
+                     active.isContentEditable;
+
+    if(isTyping) return;
+
     const isShift = e.shiftKey;
     
     if (e.code === "KeyJ") {
