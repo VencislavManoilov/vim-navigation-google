@@ -17,6 +17,8 @@ function updateSelection(direction) {
         currentIndex++;
     } else if (direction === 'up' && currentIndex > 0) {
         currentIndex--;
+    } else if (direction === 'first') {
+        currentIndex = 0;
     }
 
     results[currentIndex].scrollIntoView({ behavior: "smooth", block: "center" });
@@ -25,6 +27,7 @@ function updateSelection(direction) {
 
 // Initial highlight
 updateSelection();
+let pressedG = false;
 
 addEventListener("keydown", (e) => {
     const active = document.activeElement;
@@ -35,6 +38,17 @@ addEventListener("keydown", (e) => {
     if(isTyping) return;
 
     const isShift = e.shiftKey;
+
+    if (e.code === "KeyG") {
+        if(pressedG) {
+            updateSelection("first");
+            pressedG = false;
+        } else {
+            pressedG = true;
+        }
+    } else {
+        pressedG = false;
+    }
     
     if (e.code === "KeyJ") {
         updateSelection("down");
