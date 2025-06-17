@@ -19,6 +19,8 @@ function updateSelection(direction) {
         currentIndex--;
     } else if (direction === 'first') {
         currentIndex = 0;
+    } else if (direction === 'last') {
+        currentIndex = results.length - 1;
     }
 
     results[currentIndex].scrollIntoView({ behavior: "smooth", block: "center" });
@@ -40,6 +42,11 @@ addEventListener("keydown", (e) => {
     const isShift = e.shiftKey;
 
     if (e.code === "KeyG") {
+        if(isShift) {
+            updateSelection("last");
+            return pressedG = false;
+        }
+
         if(pressedG) {
             updateSelection("first");
             pressedG = false;
