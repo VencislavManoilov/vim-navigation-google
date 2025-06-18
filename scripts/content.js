@@ -10,8 +10,20 @@ const results = page ? [...page.querySelectorAll("a > h3")]
 
 let currentIndex = 0;
 
+function isInAllSection() {
+    const currSection = document.querySelectorAll('[aria-current="page"]');
+    const html = currSection[0]?.innerHTML;
+    if(html) {
+        return !(html.includes("Images") || html.includes("Short videos"));
+    }
+
+    return false;
+}
+
+const isAllSection = isInAllSection();
+
 function updateSelection(direction) {
-    if (results && !results.length) return;
+    if (!isAllSection || !results || !results.length) return;
 
     if (direction === 'down' && currentIndex < results.length - 1) {
         currentIndex++;
@@ -29,6 +41,7 @@ function updateSelection(direction) {
 
 // Initial highlight
 updateSelection();
+
 let pressedG = false;
  
 addEventListener("keydown", (e) => {
