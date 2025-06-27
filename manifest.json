@@ -15,8 +15,7 @@
     "background": {
         "service_worker": "scripts/background.js"
     },
-    "permissions": ["tabs"],
-    "host_permissions": ["<all_urls>"],
+    "host_permissions": ["https://google.com/"],
     "content_scripts": [
         {
             "js": ["scripts/content.js"],
