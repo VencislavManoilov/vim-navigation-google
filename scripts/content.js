@@ -43,47 +43,54 @@ function updateSelection(direction) {
 updateSelection();
 
 let pressedG = false;
- 
-addEventListener("keydown", (e) => {
-    const active = document.activeElement;
-    const isTyping = active.tagName === 'INPUT' ||
-                     active.tagName === 'TEXTAREA' ||
-                     active.isContentEditable;
 
-    if(isTyping) return;
+let lastOpenTime = 0;
 
-    const isShift = e.shiftKey;
+if (!window.hasRunVimNavigationListener) {
+    window.hasRunVimNavigationListener = true;
 
-    if (e.code === "KeyG") {
-        if(isShift) {
-            updateSelection("last");
-            return pressedG = false;
-        }
+    addEventListener("keydown", (e) => {
+        const active = document.activeElement;
+        const isTyping = active.tagName === 'INPUT' ||
+                         active.tagName === 'TEXTAREA' ||
+                         active.isContentEditable;
 
-        if(pressedG) {
-            updateSelection("first");
+        if(isTyping) return;
+
+        const isShift = e.shiftKey;
+
+        if (e.code === "KeyG") {
+            if(isShift) {
+                updateSelection("last");
+                return pressedG = false;
+            }
+
+            if(pressedG) {
+                updateSelection("first");
+                pressedG = false;
+            } else {
+                pressedG = true;
+            }
+        } else {
             pressedG = false;
-        } else {
-            pressedG = true;
         }
-    } else {
-        pressedG = false;
-    }
-    
-    if (e.code === "KeyJ") {
-        updateSelection("down");
-    } else if (e.code === "KeyK") {
-        updateSelection("up");
-    } else if (e.code === "Enter" && results[currentIndex]) {
-        e.preventDefault();
-        if (isShift) {
-            chrome.runtime.sendMessage({
-                action: "openTab",
-                url: results[currentIndex].href
-            });
-        } else {
-            window.location.href = results[currentIndex].href;
-        }
-    }
-});
+        
+        if (e.code === "KeyJ") {
+            updateSelection("down");
+        } else if (e.code === "KeyK") {
+            updateSelection("up");
+        } else if (e.code === "Enter" && results[currentIndex]) {
+            e.preventDefault();
+            if (isShift && now - lastOpenTime > 500) {
+                lastOpenTime = now;
 
+                chrome.runtime.sendMessage({
+                    action: "openTab",
+                    url: results[currentIndex].href
+                });
+            } else {
+                window.location.href = results[currentIndex].href;
+            }
+        }
+    });
+}
