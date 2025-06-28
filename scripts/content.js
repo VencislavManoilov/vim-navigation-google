@@ -44,8 +44,6 @@ updateSelection();
 
 let pressedG = false;
 
-let lastOpenTime = 0;
-
 if (!window.hasRunVimNavigationListener) {
     window.hasRunVimNavigationListener = true;
 
@@ -81,14 +79,8 @@ if (!window.hasRunVimNavigationListener) {
             updateSelection("up");
         } else if (e.code === "Enter" && results[currentIndex]) {
             e.preventDefault();
-            if (isShift && now - lastOpenTime > 500) {
-                lastOpenTime = now;
-
-                chrome.runtime.sendMessage({
-                    action: "openTab",
-                    url: results[currentIndex].href
-                });
-            } else {
+            // For some reason, pressing Shift + Enter opens the link in a new tab by itself... what?!
+            if (!isShift) {
                 window.location.href = results[currentIndex].href;
             }
         }
