@@ -2,8 +2,8 @@
     "name": "Vim Navigation for Google",
     "description": "Vim motions for google search",
     "version": "1.0",
-    "manifest_version": 3,
-    "action": {
+    "manifest_version": 2,
+    "browser_action": {
         "default_popup": "index.html"
     },
     "icons": {
@@ -13,16 +13,14 @@
         "128": "images/icon-128.png"
     },
     "background": {
-        "service_worker": "scripts/background.js"
+        "scripts": ["scripts/background.js"]
     },
-    "host_permissions": ["https://google.com/"],
+    "permissions": ["https://www.google.com/"],
     "content_scripts": [
         {
             "js": ["scripts/content.js"],
             "css": ["styles/content.css"],
-            "matches": [
-                "https://www.google.com/*"
-            ]
+            "matches": ["https://www.google.com/*"]
         }
     ]
 }

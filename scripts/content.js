@@ -3,7 +3,6 @@ const page = document.querySelector("#search #rso");
 const results = page ? [...page.querySelectorAll("a > h3")]
     .map(h3 => h3.parentElement)
     .filter(a => {
-        // Ensure it's a visible standard link and not part of special boxes
         const parent = a.closest('[data-hveid]');
         return parent && !parent.closest('.related-question-pair, .kp-blk, .g-blk, .xpdopen, .xpd');
     }) : false;
@@ -16,7 +15,6 @@ function isInAllSection() {
     if(html) {
         return !(html.includes("Images") || html.includes("Short videos"));
     }
-
     return false;
 }
 
@@ -39,10 +37,18 @@ function updateSelection(direction) {
     results[currentIndex].focus();
 }
 
-// Initial highlight
 updateSelection();
 
 let pressedG = false;
+
+// Cross-browser message sender
+function sendMessage(msg) {
+    if (typeof browser !== "undefined" && browser.runtime) {
+        return browser.runtime.sendMessage(msg);
+    } else if (chrome && chrome.runtime) {
+        return chrome.runtime.sendMessage(msg);
+    }
+}
 
 if (!window.hasRunVimNavigationListener) {
     window.hasRunVimNavigationListener = true;
@@ -72,7 +78,7 @@ if (!window.hasRunVimNavigationListener) {
         } else {
             pressedG = false;
         }
-        
+
         if (e.code === "KeyJ") {
             updateSelection("down");
         } else if (e.code === "KeyK") {
@@ -80,7 +86,7 @@ if (!window.hasRunVimNavigationListener) {
         } else if (e.code === "Enter" && results[currentIndex]) {
             e.preventDefault();
             if (isShift) {
-                chrome.runtime.sendMessage({
+                sendMessage({
                     action: "openTab",
                     url: results[currentIndex].href
                 });
