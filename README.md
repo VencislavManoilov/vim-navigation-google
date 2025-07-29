@@ -1,5 +1,8 @@
 # Vim Navigation for Google
 
+[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/nagkegapolknpcdbihonojikfnecegel.svg?logo=googlechrome)](https://chromewebstore.google.com/detail/vim-navigation-for-google/nagkegapolknpcdbihonojikfnecegel)
+[![Firefox Add-on](https://img.shields.io/amo/v/vim-navigation-for-google.svg?logo=firefox)](https://addons.mozilla.org/en-US/firefox/addon/vim-navigation-for-google)
+
 **Navigate Google search results using Vim-style keyboard shortcuts.**  
 Stop wasting time with your mouse—get lightning-fast search result navigation with just your keyboard.
 
@@ -16,9 +19,12 @@ Use familiar Vim motions while browsing Google search results:
 
 ## 🛠️ Installation
 
-This extension isn't uploaded to [Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/), yet
+Install it for your browser of choice:
 
-## 💡 Why use it?
+- 👉 **[Chrome Web Store](https://chromewebstore.google.com/detail/vim-navigation-for-google/nagkegapolknpcdbihonojikfnecegel)**
+- 👉 **[Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/vim-navigation-for-google/)**
+
+## 💡 Why?
 
 Because your fingers shouldn't have to leave the keyboard. This extension brings the speed and power of Vim to your daily Google searches.
 
